@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Head from "next/head";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,37 +32,43 @@ export default function MusicMemories() {
   };
 
   return (
-    <div className="p-4 max-w-3xl mx-auto text-center">
-      <h1 className="text-2xl font-bold">Songs That Remind Me of Her</h1>
-      {songs.map(song => (
-        <Card key={song.id} className="m-4">
-          <CardContent>
-            <h2 className="text-lg font-semibold">{song.title}</h2>
-            <iframe 
-              width="100%" 
-              height="200" 
-              src={song.url} 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-            {admin && <Button onClick={() => removeSong(song.id)} className="mt-2">Remove</Button>}
-          </CardContent>
-        </Card>
-      ))}
-      {!admin && (
-        <div className="mt-4">
-          <Input type="password" placeholder="Admin Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          <Button onClick={handleLogin} className="mt-2">Login</Button>
-        </div>
-      )}
-      {admin && (
-        <div className="mt-4">
-          <Input placeholder="Song Title" value={newSong.title} onChange={(e) => setNewSong({ ...newSong, title: e.target.value })} />
-          <Input placeholder="YouTube Link" value={newSong.url} onChange={(e) => setNewSong({ ...newSong, url: e.target.value })} />
-          <Button onClick={addSong} className="mt-2">Add Song</Button>
-        </div>
-      )}
-    </div>
+    <>
+      <Head>
+        <title>Music Memories</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <div className="p-4 max-w-3xl mx-auto text-center">
+        <h1 className="text-2xl font-bold">Songs That Remind Me of Her</h1>
+        {songs.map(song => (
+          <Card key={song.id} className="m-4">
+            <CardContent>
+              <h2 className="text-lg font-semibold">{song.title}</h2>
+              <iframe 
+                width="100%" 
+                height="200" 
+                src={song.url} 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+              {admin && <Button onClick={() => removeSong(song.id)} className="mt-2">Remove</Button>}
+            </CardContent>
+          </Card>
+        ))}
+        {!admin && (
+          <div className="mt-4">
+            <Input type="password" placeholder="Admin Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <Button onClick={handleLogin} className="mt-2">Login</Button>
+          </div>
+        )}
+        {admin && (
+          <div className="mt-4">
+            <Input placeholder="Song Title" value={newSong.title} onChange={(e) => setNewSong({ ...newSong, title: e.target.value })} />
+            <Input placeholder="YouTube Link" value={newSong.url} onChange={(e) => setNewSong({ ...newSong, url: e.target.value })} />
+            <Button onClick={addSong} className="mt-2">Add Song</Button>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
